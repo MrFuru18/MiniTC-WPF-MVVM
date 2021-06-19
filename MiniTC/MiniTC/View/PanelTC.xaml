@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="MiniTC.PanelTC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MiniTC"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="1" Content="path" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,250,0"/>
+        <Label Grid.Row="1" Grid.Column="1" Content="drive" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,60,0" />
+
+        <TextBox x:Name="tb_path" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"
+                 Width="240" Height="22" IsEnabled="False"
+                 TextChanged="tb_TextChanged"
+                 Text="{
+                        Binding Path=Directory,
+                        UpdateSourceTrigger=PropertyChanged, 
+                        RelativeSource={
+                                        RelativeSource Mode=FindAncestor, 
+                                        AncestorType={x:Type UserControl}
+                                       }
+                        }"/>
+        <ComboBox x:Name="cb_drives" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="50" Height="25"
+                  GotMouseCapture="cb_GotMouseCapture" SelectionChanged="cb_SelectionChanged"
+                  ItemsSource="{Binding Path=DrivesNames, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                  SelectedItem ="{Binding Path=CurrentDrive, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                  />
+
+
+        <ListBox x:Name="lb_files" Grid.Row="2" Grid.Column="1" MouseDoubleClick="lb_MouseDoubleClick"
+                 ItemsSource="{Binding Path=Directories, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
+                 SelectedItem="{Binding Path=SelectedDirectory, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"/>
+
+
+    </Grid>
+</UserControl>
+
